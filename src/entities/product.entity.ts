@@ -15,18 +15,4 @@ export class ProductEntity {
   @Column({ default: 0, type: 'decimal' })
   price!: number;
 
-  // @OneToMany('ProductRetailEntity', 'product', {
-  //   eager: false,
-  // })
-  // productRetails?: Record<string, unknown>[];
-
-  // @OneToMany('ProductRetailPrimaryEntity', 'product', {
-  //   eager: false,
-  // })
-  // productRetailPrimaries?: Record<string, unknown>[];
-
-  // @OneToMany('ProductRetailSecondaryEntity', 'product', {
-  //   eager: false,
-  // })
-  // productRetailSecondaries?: Record<string, unknown>[];
 }

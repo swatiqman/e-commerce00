@@ -31,19 +31,4 @@ export class ProductLineEntity {
   @ManyToOne(() => ProductEntity, (product) => product.id)
   @JoinColumn({ name: 'productId' })
   product?: ProductEntity;
-
-  // @OneToMany('ProductRetailEntity', 'product', {
-  //   eager: false,
-  // })
-  // productRetails?: Record<string, unknown>[];
-
-  // @OneToMany('ProductRetailPrimaryEntity', 'product', {
-  //   eager: false,
-  // })
-  // productRetailPrimaries?: Record<string, unknown>[];
-
-  // @OneToMany('ProductRetailSecondaryEntity', 'product', {
-  //   eager: false,
-  // })
-  // productRetailSecondaries?: Record<string, unknown>[];
 }

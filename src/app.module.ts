@@ -10,6 +10,11 @@ import {
 } from './config/typeorm-app.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ENTITIES } from './entities';
+import { AuthModule } from './auth/auth.module';
+import { ProductModule } from './features/product/product.module';
+import { ProductLineModule } from './features/product-line/product-line.module';
+import { UserModule } from './features/user/user.module';
+import { OrderModule } from './features/order/order.module';
 
 @Module({
   imports: [
@@ -28,6 +33,11 @@ import { ENTITIES } from './entities';
         };
       },
     }),
+    AuthModule,
+    ProductModule,
+    ProductLineModule,
+    UserModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -22,7 +22,7 @@ export class OrderEntity {
   user?: UserEntity;
 
   @OneToMany('ProductLineEntity', 'order', {
-    eager: false,
+    eager: true,
   })
   productLines?: Record<string, unknown>[];
 }
