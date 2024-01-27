@@ -8,10 +8,9 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { argon2id, hash, verify } from 'argon2';
-import { randomUUID } from 'crypto';
 import { LoginModel, UserModel } from 'src/app.interface';
 import { InjectJwtAppConfig, JwtAppConfig } from 'src/config/jwt-app.config';
-import { SignUpDto } from 'src/dto/auth/signup.dto';
+import { SignUpDto } from 'src/dto/auth/sign-up.dto';
 import { UserRepository } from 'src/repositories/user.repository';
 import { EntityNotFoundError } from 'typeorm';
 
