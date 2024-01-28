@@ -33,6 +33,18 @@ export class ProductController {
     return this.srv.update(id, body);
   }
 
+  @ApiQuery({ name: 'page', type: 'number', required: false })
+  @ApiQuery({ name: 'limit', type: 'number', required: false })
+  @ApiQuery({ name: 'query', type: 'object', required: false })
+  @Get('low-stock')
+  getAllLowOnStock(
+    // @Query(QueryPipe) query: QueryPipe,
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ) {
+    return this.srv.findProductLowOnStock({ page, limit });
+  }
+
   @Get(':id')
   getOne(@Param('id') id: string) {
     return this.srv.findOne(id);

@@ -8,6 +8,7 @@ import {
 import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
 import {
   EntityNotFoundError,
+  FindManyOptions,
   FindOptionsOrderProperty,
   FindOptionsRelations,
   ObjectLiteral,
@@ -20,7 +21,7 @@ export const findOneEntity = async <T extends ObjectLiteral>(
   id: string,
   loadEagerRelations = false,
   partition?: Record<string, unknown>,
-  relations?: FindOptionsRelations<T> | undefined
+  relations?: FindOptionsRelations<T> | undefined,
 ) => {
   try {
     return await repo.findOneOrFail({
@@ -44,9 +45,9 @@ export const findEntity = async <T extends ObjectLiteral>(
   loadEagerRelations = false,
   partition?: Record<string, unknown>,
   relations?: FindOptionsRelations<T> | undefined,
-  order?: FindOptionsOrderProperty<T> | undefined
+  order?: FindOptionsOrderProperty<T> | undefined,
 ) => {
-  return await paginate<T>(repo, pagination, {
+  const findOption = {
     order:
       reverseOrder !== null
         ? { createdAt: reverseOrder ? 'ASC' : 'DESC' }
@@ -54,14 +55,18 @@ export const findEntity = async <T extends ObjectLiteral>(
     where: { ...query, ...partition },
     loadEagerRelations,
     relations,
-  } as any);
+  } as FindManyOptions;
+  if (pagination.limit && pagination.page)
+    return await paginate<T>(repo, pagination, findOption);
+
+  return await repo.find(findOption as FindManyOptions<T>);
 };
 
 export const createEntity = async <T extends ObjectLiteral>(
   repo: Repository<T>,
   name: string,
   dto: any,
-  partition?: Record<string, unknown>
+  partition?: Record<string, unknown>,
 ) => {
   try {
     const newEntityToBeinserted: any = repo.create();
@@ -90,7 +95,7 @@ export const updateEntity = async <T extends ObjectLiteral>(
   name: string,
   id: string,
   body: any,
-  partition?: Record<string, unknown>
+  partition?: Record<string, unknown>,
 ) => {
   // get entity by id
   const entity: any = await repo.findOne({
@@ -126,13 +131,13 @@ export const deleteEntity = async <T extends ObjectLiteral>(
   repo: Repository<T>,
   name: string,
   queryOrId: string | Record<string, unknown>,
-  soft = true
+  soft = true,
 ) => {
   // check if entity exists
   if (soft) await repo.softDelete(queryOrId as any);
   else await repo.remove(queryOrId as any);
 
   return `${name} with id ${
-     typeof queryOrId === 'string' ? queryOrId : (queryOrId as any)?.id
+    typeof queryOrId === 'string' ? queryOrId : (queryOrId as any)?.id
   } has been deleted`;
 };

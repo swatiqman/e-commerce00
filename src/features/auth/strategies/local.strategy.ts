@@ -12,8 +12,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     super({ passReqToCallback: true });
   }
 
-  async validate({ body, query }: Request) {
-    const user = await this.authSrv.validateUser({ ...body, ...query });
+  async validate({ body }: Request) {
+    const user = await this.authSrv.validateUser(body);
     if (!user) {
       throw new UnauthorizedException('Invalid Credentials');
     }

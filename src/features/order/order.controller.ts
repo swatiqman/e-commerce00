@@ -13,8 +13,10 @@ import { OrderService } from './order.service';
 import { OrderProductDto } from 'src/dto/order/order-product.dto';
 import { QueryPipe } from 'src/pipes/query.pipe';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { GetUser } from 'src/decorators/get-user.decorator';
+import { UserModel } from 'src/app.interface';
 
-ApiTags('Order');
+@ApiTags('Order')
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 @Controller('order')
@@ -22,8 +24,8 @@ export class OrderController {
   constructor(private srv: OrderService) {}
 
   @Post()
-  create(@Body() body: OrderProductDto) {
-    return this.srv.create(body);
+  create(@Body() body: OrderProductDto, @GetUser() user:  UserModel) {
+    return this.srv.create(body, user);
   }
 
   @Get(':id')

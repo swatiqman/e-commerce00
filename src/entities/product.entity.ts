@@ -1,11 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { BaseEntity } from './base.entity';
 
 @Entity('products')
-export class ProductEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
+export class ProductEntity extends BaseEntity {
   @Column()
   name!: string;
 
@@ -14,5 +12,4 @@ export class ProductEntity {
 
   @Column({ default: 0, type: 'decimal' })
   price!: number;
-
 }

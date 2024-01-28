@@ -22,6 +22,18 @@ export class AuthService {
     @InjectJwtAppConfig() private jwtConfig: JwtAppConfig,
   ) {}
 
+  async login(user: UserModel) {
+    const { id, email } = user;
+
+    return [
+      { ...user },
+      {
+        access_token: this.jwtService.sign({ id, email }),
+        expiresIn: this.jwtConfig.expiresIn,
+      },
+    ];
+  }
+
   async signup(user: SignUpDto) {
     try {
       const { password, ..._user } = user;
@@ -48,6 +60,7 @@ export class AuthService {
       const { password: hasPassword, ...user } =
         await this.userRepo.findOneOrFail({
           where: { email },
+          select: ['email', 'id', 'password', 'name'],
           loadEagerRelations: false,
         });
 

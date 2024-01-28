@@ -14,8 +14,8 @@ function configureSwagger(
   app: INestApplication,
 ) {
   const swaggerOptions = new DocumentBuilder()
-    .setTitle('Smart Insurance')
-    .setDescription('API docs for Smart Insurance Apps')
+    .setTitle('Amalitech Ecommence')
+    .setDescription('API docs Amalitech Test Interview')
     .addBearerAuth()
     .setVersion('1.0.0')
     .build();

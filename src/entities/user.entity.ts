@@ -1,12 +1,10 @@
 /* eslint-disable prettier/prettier */
 
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { BaseEntity } from './base.entity';
 
 @Entity({ name: 'users' })
-export class UserEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
+export class UserEntity extends BaseEntity {
   @Column()
   name!: string;
 
@@ -15,6 +13,4 @@ export class UserEntity {
 
   @Column({ select: false })
   password!: string;
-
- 
 }

@@ -2,18 +2,16 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
 import { OrderEntity } from './order.entity';
 import { ProductEntity } from './product.entity';
+import { BaseEntity } from './base.entity';
 
 @Entity('product-lines')
-export class ProductLineEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
+export class ProductLineEntity extends BaseEntity {
+  
   @Column()
   quantity!: number;
 
@@ -28,7 +26,7 @@ export class ProductLineEntity {
   @JoinColumn({ name: 'orderId' })
   order?: OrderEntity;
 
-  @ManyToOne(() => ProductEntity, (product) => product.id)
+  @ManyToOne(() => ProductEntity, (product) => product.id, {eager: true})
   @JoinColumn({ name: 'productId' })
   product?: ProductEntity;
 }
